@@ -1,5 +1,6 @@
 {
   "name": "react-my-todo",
+  "homepage": "https://mooenz.github.io/react-my-todo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
