@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
-const Formulario = () => {
+const Formulario = ({ agregarTodo }) => {
   const initialState = {
     nombre: '',
     descripcion: '',
@@ -9,14 +10,59 @@ const Formulario = () => {
   };
 
   const [todo, setTodo] = useState(initialState);
+
   const { nombre, descripcion, estado, prioridad } = todo;
-  const handleChange = (e) => {
-    const { name, value, checked, type } = e.target;
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!nombre.trim()) {
+      event.target[0].focus();
+
+      return Swal.fire({
+        title: 'Error!',
+        text: 'El nombre no debe ir el blanco',
+        icon: 'error',
+      });
+    }
+
+    if (!descripcion.trim()) {
+      event.target[1].focus();
+
+      return Swal.fire({
+        title: 'Error!',
+        text: 'La descripción no debe ir el blanco',
+        icon: 'error',
+      });
+    }
+
+    return Swal.fire({
+      title: 'Tarea Agregada',
+      icon: 'success',
+    });
   };
+
+  // agregarTodo({
+  //   nombre: nombre,
+  //   descripcion: descripcion,
+  //   estado: estado === 'pendiente' ? false : true,
+  //   prioridad: prioridad,
+  //   id: Date.now(),
+  // });
+
+  const handleChange = (event) => {
+    const { name, value, checked, type } = event.target;
+
+    setTodo((old) => ({
+      ...old,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
   return (
     <>
-      <h3>Agregar TODO</h3>
-      <form>
+      <h3>Agregar ToDo</h3>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="nombre"
@@ -26,11 +72,13 @@ const Formulario = () => {
           onChange={handleChange}
         />
         <textarea
-          name="Descripcion"
+          name="descripcion"
           className="form-control mb-2"
           placeholder="Ingrese descripción"
           value={descripcion}
           onChange={handleChange}
+          cols={5}
+          rows={5}
         />
         <select
           name="estado"
@@ -51,7 +99,7 @@ const Formulario = () => {
             onChange={handleChange}
           />
           <label htmlFor="flexCheckDefault" className="form-check-label">
-            Default checkbox
+            Prioridad
           </label>
         </div>
         <button type="submit" className="btn btn-primary">
