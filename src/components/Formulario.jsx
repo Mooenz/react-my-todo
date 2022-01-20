@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
+import { useFormulario } from '../hooks/useFormulario';
 
 const Formulario = ({ agregarTodo }) => {
   const initialState = {
@@ -10,9 +10,9 @@ const Formulario = ({ agregarTodo }) => {
     prioridad: false,
   };
 
-  const [todo, setTodo] = useState(initialState);
+  const [inputs, handleChange, reset] = useFormulario(initialState);
 
-  const { nombre, descripcion, estado, prioridad } = todo;
+  const { nombre, descripcion, estado, prioridad } = inputs;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -45,21 +45,12 @@ const Formulario = ({ agregarTodo }) => {
       id: uuidv4(),
     });
 
-    setTodo(initialState);
+    reset(initialState);
 
     return Swal.fire({
       title: 'Tarea Agregada',
       icon: 'success',
     });
-  };
-
-  const handleChange = (event) => {
-    const { name, value, checked, type } = event.target;
-
-    setTodo((old) => ({
-      ...old,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
   };
 
   return (

@@ -27,10 +27,12 @@ const Todo = ({ item, eliminarTodo, editarTodo }) => {
               Eliminar
             </button>
             <button
-              className="btn btn-secondary fw-bold"
+              className={`btn fw-bold ${
+                estado ? 'bg-success' : 'btn-secondary'
+              }`}
               onClick={() => editarTodo(id)}
             >
-              {estado? 'Agregar de nuevo': 'Check'}
+              {estado ? 'Agregar de nuevo' : 'Check'}
             </button>
           </div>
         </div>
