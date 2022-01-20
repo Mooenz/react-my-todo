@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
+import { v4 as uuidv4 } from 'uuid';
 
 const Formulario = ({ agregarTodo }) => {
   const initialState = {
@@ -36,19 +37,21 @@ const Formulario = ({ agregarTodo }) => {
       });
     }
 
+    agregarTodo({
+      nombre: nombre,
+      descripcion: descripcion,
+      estado: estado === 'pendiente' ? false : true,
+      prioridad: prioridad,
+      id: uuidv4(),
+    });
+
+    setTodo(initialState);
+
     return Swal.fire({
       title: 'Tarea Agregada',
       icon: 'success',
     });
   };
-
-  // agregarTodo({
-  //   nombre: nombre,
-  //   descripcion: descripcion,
-  //   estado: estado === 'pendiente' ? false : true,
-  //   prioridad: prioridad,
-  //   id: Date.now(),
-  // });
 
   const handleChange = (event) => {
     const { name, value, checked, type } = event.target;
