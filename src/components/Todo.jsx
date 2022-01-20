@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Todo = ({ item, eliminarTodo, editarTodo }) => {
-  console.log(item);
 
   const { nombre, descripcion, estado, prioridad, id } = item;
   return (
@@ -28,7 +27,7 @@ const Todo = ({ item, eliminarTodo, editarTodo }) => {
             </button>
             <button
               className={`btn fw-bold ${
-                estado ? 'bg-success' : 'btn-secondary'
+                estado ? 'bg-success text-light' : 'btn-warning'
               }`}
               onClick={() => editarTodo(id)}
             >

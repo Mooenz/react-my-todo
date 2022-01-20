@@ -1,9 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Formulario from './Formulario';
 import Todo from './Todo';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    if (localStorage.getItem('todos')) {
+      setTodos(JSON.parse(localStorage.getItem('todos')));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  });
 
   const agregarTodo = (todo) => {
     setTodos((old) => [...old, todo]);
@@ -27,7 +37,12 @@ const TodoList = () => {
       <h2 className="mt-4">Lista ToDos</h2>
       <ul className="list-group list-group-numbered">
         {todos.map((item) => (
-          <Todo key={item.id} item={item} eliminarTodo={eliminarTodo} editarTodo={editarTodo}/>
+          <Todo
+            key={item.id}
+            item={item}
+            eliminarTodo={eliminarTodo}
+            editarTodo={editarTodo}
+          />
         ))}
       </ul>
     </>

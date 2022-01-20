@@ -83,7 +83,7 @@ const Formulario = ({ agregarTodo }) => {
           <option value="pendiente">Pendiente</option>
           <option value="completado">Completado</option>
         </select>
-        <div className="form-check">
+        <div className="form-check my-3">
           <input
             type="checkbox"
             className="form-check-input"
@@ -96,7 +96,7 @@ const Formulario = ({ agregarTodo }) => {
             Prioridad
           </label>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary w-100">
           Agregar
         </button>
       </form>
